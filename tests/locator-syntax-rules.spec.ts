@@ -7,52 +7,61 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("Locator Syntax Rules", async ({ page }) => {
-    //find by Tag
-    page.locator('input')
+  //find by Tag
+  page.locator("input");
 
-    //find by ID
-    page.locator('#inputEmail1')
+  //find by ID
+  page.locator("#inputEmail1");
 
-    //find by class value
-    page.locator('.shape-rectangle')
+  //find by class value
+  page.locator(".shape-rectangle");
 
-    //find by any attribute
-    page.locator('[placeholder="Email"]')
+  //find by any attribute
+  page.locator('[placeholder="Email"]');
 
-    //find by full class value
-    page.locator('[class="menu-sidebar left expanded"]')
+  //find by full class value
+  page.locator('[class="menu-sidebar left expanded"]');
 
-    //find by several selectors
-    page.locator('input[placeholder="Email"][nbinput]')
+  //find by several selectors
+  page.locator('input[placeholder="Email"][nbinput]');
 
-    //find by Xpath (NOT RECOMMENDED)
-    page.locator('//*[@id="inputEmail1"]')
+  //find by Xpath (NOT RECOMMENDED)
+  page.locator('//*[@id="inputEmail1"]');
 
-    //find by text
-    page.locator(':text("Using")')
+  //find by text
+  page.locator(':text("Using")');
 
-    //find by exact text match
-    page.locator(':text-is("Using the Grid")')
+  //find by exact text match
+  page.locator(':text-is("Using the Grid")');
 });
 
-test('User visible locators', async ({page}) => {
+test("User visible locators", async ({ page }) => {
   //getByRole = the role of each label
-  await page.getByRole('button', {name: 'Sign in'}).first().click()
-  await page.getByRole('textbox', {name: 'Email'}).first().fill('test@test.com')
-  await page.getByLabel('Email').first().fill('test@test.com')
-  await page.getByPlaceholder('Jane Doe').fill('Jefferson Leger')
-  await page.getByText('Submit').first().click()
+  await page.getByRole("button", { name: "Sign in" }).first().click();
+  await page
+    .getByRole("textbox", { name: "Email" })
+    .first()
+    .fill("test@test.com");
+  await page.getByLabel("Email").first().fill("test@test.com");
+  await page.getByPlaceholder("Jane Doe").fill("Jefferson Leger");
+  await page.getByText("Submit").first().click();
   //await page.getByTestId('inputEmail').fill('test@test.com')
-  await page.getByTitle('IoT Dashboard').click()
-})
+  await page.getByTitle("IoT Dashboard").click();
+});
 
+test("Locating child elements", async ({ page }) => {
+  await page
+    .locator("nb-card")
+    .locator("nb-radio-group")
+    .locator(':text-is("Option 1")')
+    .click();
+  await page.locator('nb-card nb-radio-group :text-is("Option 2")').click();
 
+  await page
+    .locator("nb-card")
+    .getByRole("button", { name: "Sign in" })
+    .first()
+    .click();
 
-
-
-
-
-
-
-
-
+  await page.locator("nb-card").nth(3).getByRole('button').click();
+});
